@@ -80,8 +80,8 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
 */
 
 function Villain(villain){
+  Humanoid.call(this,villain);
   this.attack = function(character){
-    // console.log(character);
     character.healthPoints -=5;
     // console.log(character.healthPoints);
     if(character.healthPoints == 0){
@@ -197,16 +197,13 @@ Hero.prototype = Object.create(Humanoid.prototype);
   console.log(newVillain.attack(mage));
   newVillain.attack(newHero);
   newHero.attack(newVillain);
-  console.log(newVillain.healthPoints);
-  console.log(newHero.healthPoints);
   newVillain.attack(newHero);
   newHero.attack(newVillain);
   newVillain.attack(newHero);
   newHero.attack(newVillain);
   newVillain.attack(newHero);
   newHero.attack(newVillain);
-  newVillain.attack(newHero);
-  newHero.attack(newVillain);
+
 
 
   // Stretch task: 
