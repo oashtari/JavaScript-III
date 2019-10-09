@@ -21,7 +21,7 @@ function GameObject(attrs) {
   this.name = attrs.name;
   this.dimensions = attrs.dimensions;
   this.destroy = function(){
-    return `${this.name} was removed from the game`;
+    console.log(`${this.name} was removed from the game`);
 };
 }
 
@@ -79,6 +79,25 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
 
+function Villain(villain){
+  this.attack = function(character){
+    // console.log(character);
+    character.healthPoints -=5;
+    // console.log(character.healthPoints);
+    if(character.healthPoints == 0){
+      character.destroy();
+    }
+}
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+
+function Hero(hero){
+  Villain.call(this,hero);
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
 
@@ -132,6 +151,39 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
     language: 'Elvish',
   });
 
+  const newVillain = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 20,
+    name: 'evil',
+    team: 'evil',
+    weapons: [
+      'evil stuff',
+    ],
+    language: 'Common Tongue',
+  });
+
+
+  const newHero = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 20,
+    name: 'good',
+    team: 'good',
+    weapons: [
+      'gooder stuff',
+    ],
+    language: 'Common Tongue',
+  });
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -142,6 +194,19 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+  console.log(newVillain.attack(mage));
+  newVillain.attack(newHero);
+  newHero.attack(newVillain);
+  console.log(newVillain.healthPoints);
+  console.log(newHero.healthPoints);
+  newVillain.attack(newHero);
+  newHero.attack(newVillain);
+  newVillain.attack(newHero);
+  newHero.attack(newVillain);
+  newVillain.attack(newHero);
+  newHero.attack(newVillain);
+  newVillain.attack(newHero);
+  newHero.attack(newVillain);
 
 
   // Stretch task: 
